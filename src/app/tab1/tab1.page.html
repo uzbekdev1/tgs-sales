@@ -1,12 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab One
+      TGS - Contacts
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
     <ion-card class="welcome-card">
       <ion-img src="/assets/shapes.svg"></ion-img>
       <ion-card-header>
@@ -17,25 +18,39 @@
         <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
       </ion-card-content>
     </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
+
+    <ion-list>
+        <ng-container *ngIf="!companies || companies.length == 0">
+            <div *ngFor="let n of [0,1,2]" padding>
+              <ion-skeleton-text></ion-skeleton-text>
+              <p>
+                <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
+              </p>
+            </div>
+          </ng-container>
+       
+          <ion-item-sliding *ngFor="let item of companies">
+            <ion-item lines="inset" button [routerLink]="['/details', item.id]">
+              <ion-label>
+                {{ item.task }}
+                <p>{{ item.createdAt | date:'short' }}</p>
+              </ion-label>
+              <ion-note slot="end" color="primary">{{ item.priority }}</ion-note>
+            </ion-item>
+       
+            <ion-item-options side="end">
+              <ion-item-option (click)="remove(item)" color="secondary">
+                Check
+                <ion-icon name="checkmark" slot="end"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
     </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button routerLink="/details" routerDirection="forward">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
 </ion-content>
