@@ -3,12 +3,20 @@
     <ion-title>
       TGS - Contacts
     </ion-title>
+
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
 
-    <ion-card class="welcome-card">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button class="fab-add" routerLink="/details" routerDirection="forward">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- <ion-card class="welcome-card">
       <ion-img src="/assets/shapes.svg"></ion-img>
       <ion-card-header>
         <ion-card-subtitle>Get Started</ion-card-subtitle>
@@ -17,40 +25,40 @@
       <ion-card-content>
         <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
 
-    <ion-list>
-        <ng-container *ngIf="!companies || companies.length == 0">
-            <div *ngFor="let n of [0,1,2]" padding>
-              <ion-skeleton-text></ion-skeleton-text>
-              <p>
-                <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
-              </p>
-            </div>
-          </ng-container>
-       
-          <ion-item-sliding *ngFor="let item of companies">
-            <ion-item lines="inset" button [routerLink]="['/details', item.id]">
-              <ion-label>
-                {{ item.task }}
-                <p>{{ item.createdAt | date:'short' }}</p>
-              </ion-label>
-              <ion-note slot="end" color="primary">{{ item.priority }}</ion-note>
-            </ion-item>
-       
-            <ion-item-options side="end">
-              <ion-item-option (click)="remove(item)" color="secondary">
-                Check
-                <ion-icon name="checkmark" slot="end"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-    </ion-list>
+  <ion-list>
+    <ng-container *ngIf="!companies || companies.length == 0">
+      <div *ngFor="let n of [0,1,2]" padding>
+        <ion-skeleton-text></ion-skeleton-text>
+        <p>
+          <ion-skeleton-text class="fake-skeleton"></ion-skeleton-text>
+        </p>
+      </div>
+    </ng-container>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button routerLink="/details" routerDirection="forward">
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+    <ion-item-sliding *ngFor="let item of companies">
 
+      <ion-item button [routerLink]="['/details', item.id]">
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>
+              <h2>{{ item.companyName }}</h2>
+              <p>relatie type: {{ item.relationType }}</p>
+              <p>{{ item.city }}, {{ item.provincie }}, {{ item.country }}</p>
+              <p>Laatste contact op {{ item.createdAt | date:'d-MMMM-y' }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="success">Ga langs</ion-item-option>
+        <ion-item-option color="primary">Email <br><br> verzonden</ion-item-option>
+        <ion-item-option color="secondary">gebelt</ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
 </ion-content>

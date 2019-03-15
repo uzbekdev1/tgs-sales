@@ -10,11 +10,25 @@
   <ion-content padding>
     <ion-list lines="full">
       <ion-item>
-        <ion-input required type="text" placeholder="Task" [(ngModel)]="company.task"></ion-input>
+        <ion-input required type="text" placeholder="company Name" [(ngModel)]="company.companyName"></ion-input>
       </ion-item>
+
       <ion-item>
-        <ion-input required type="number" placeholder="Priority" [(ngModel)]="company.priority"></ion-input>
+        <ion-input required type="text" placeholder="city" [(ngModel)]="company.city"></ion-input>
       </ion-item>
+
+      <ion-item>
+          <ion-input required type="text" placeholder="provincie" [(ngModel)]="company.provincie"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-input required type="text" placeholder="country" [(ngModel)]="company.country"></ion-input>
+          </ion-item>
+
+          <ion-item>
+              <ion-input required type="text" placeholder="relation type" [(ngModel)]="company.relationType"></ion-input>
+            </ion-item>
+          
     </ion-list>
     <ion-button expand="full" (click)="saveCompany()">Save</ion-button>
   </ion-content>

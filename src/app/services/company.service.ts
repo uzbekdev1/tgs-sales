@@ -5,8 +5,11 @@ import { map } from 'rxjs/operators';
  
 export interface Company {
   id?: string;
-  task: string;
-  priority: number;
+  companyName: string;
+  city: string;
+  provincie: string;
+  country: string;
+  relationType: string;
   createdAt: number;
 }
  

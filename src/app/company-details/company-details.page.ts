@@ -11,9 +11,13 @@ import { NavController, LoadingController } from '@ionic/angular';
 export class CompanyDetailsPage implements OnInit {
  
   company: Company = {
-    task: 'test',
+    companyName: '',
+    city: '',
+    provincie: '',
+    country: '',
+    relationType: '',
     createdAt: new Date().getTime(),
-    priority: 2
+
   };
  
   companyId = null;
