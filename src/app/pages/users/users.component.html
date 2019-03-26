@@ -1,6 +1,5 @@
 <app-content-header 
     [icon]="'supervisor_account'" 
-    [title]="'Users'" 
     [desc]="'View information about the users, search, add, edit or delete any user.'"
     [hideBreadcrumb]="false"
     [hasBgImage]="true" 
@@ -32,7 +31,7 @@
 
 <div class="users-wrapper p-2">
     <div *ngIf="viewType == 'grid'" fxLayout="row wrap">    
-        <div *ngFor="let user of users | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2"> 
+        <div *ngFor="let user of users | UserSearchPipe : searchText" fxFlex="100" fxFlex.gt-md="33.3" fxFlex.md="50" fxFlex.sm="50" class="p-2"> 
             <mat-card fxLayout="row" class="p-0 user-content">  
                 <div fxFlex="35" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(user.settings.isDeleted) ? '' : user.settings.bgColor">
                     <div class="user-img">
@@ -107,7 +106,7 @@
         </div>
     </div>
     <div *ngIf="viewType == 'list'" fxLayout="row wrap">
-        <div *ngFor="let user of users | UserSearchPipe : searchText | paginate: { itemsPerPage: 6, currentPage: page }" fxFlex="100" class="p-2"> 
+        <div *ngFor="let user of users | UserSearchPipe : searchText" fxFlex="100" class="p-2"> 
             <mat-card class="p-0 user-content"> 
                 <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(user.settings.isDeleted) ? '' : user.settings.bgColor">
                     <div class="user-img">

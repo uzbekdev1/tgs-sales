@@ -37,7 +37,6 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { FavoritesComponent } from './theme/components/favorites/favorites.component';
-import { TestCaseComponent } from './test-case/test-case.component';
 
 
 @NgModule({
@@ -71,8 +70,7 @@ import { TestCaseComponent } from './test-case/test-case.component';
     ApplicationsComponent,
     MessagesComponent,
     UserMenuComponent,
-    FavoritesComponent,
-    TestCaseComponent
+    FavoritesComponent
   ],
   providers: [
     AppSettings,
