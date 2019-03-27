@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
     public searchText: string;
     public page:any;
     public settings: Settings;
-    public showSearch:boolean = false;
+    public showSearch:boolean = true;
     public viewType:string = 'grid';
     constructor(public appSettings:AppSettings, 
                 public dialog: MatDialog,
