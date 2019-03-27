@@ -95,12 +95,12 @@
                         <mat-slide-toggle [checked]="settings.rtl" (change)="settings.rtl = !settings.rtl" labelPosition="before"></mat-slide-toggle>
                     </div>
                 </div>
-                <div fxLayout="column" class="control">
+                <!-- <div fxLayout="column" class="control">
                     <h4>Choose menu</h4>
                     <mat-radio-group [(ngModel)]="menuOption" (change)="chooseMenu()">
                         <mat-radio-button *ngFor="let menu of menus" [value]="menu">{{menu}}</mat-radio-button>
                     </mat-radio-group>
-                </div>
+                </div> -->
                 <div fxLayout="column" class="control">
                     <h4>Choose menu type</h4>
                     <mat-radio-group [(ngModel)]="menuTypeOption" (change)="chooseMenuType()">
