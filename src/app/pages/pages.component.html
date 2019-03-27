@@ -1,29 +1,29 @@
 <div id="main" perfectScrollbar (psScrollY)="onPsScrollY($event)" class="h-100">
 
     <header class="header" [class.over]="showInfoContent">
-        <app-top-info-content [showInfoContent]="showInfoContent" (onCloseInfoContent)="closeInfoContent(showInfoContent)"></app-top-info-content>
+        <!-- <app-top-info-content [showInfoContent]="showInfoContent" (onCloseInfoContent)="closeInfoContent(showInfoContent)"></app-top-info-content> -->
         
         <mat-toolbar class="top-toolbar" [class.mat-elevation-z2]="settings.fixedHeader">
             <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex>           
                 <div fxLayout="row" fxLayoutAlign="center center">               
                     <a routerLink="/" fxLayout="row" fxLayoutAlign="start center" class="logo" ngClass.xs="mobile" (click)="closeSubMenus()">
                         <img src="assets/img/logo.png" alt="logo" [@rotate]="showSidenav">
-                        <span class="mx-2">ANNULAR</span> 
+                        <span class="mx-2">DARE-SOLUTIONS</span> 
                     </a>
                 </div> 
                 <div fxLayout="row" fxLayoutAlign="start center" class="w-100"> 
                     <button *ngIf="settings.menu == 'vertical'" mat-icon-button (click)="sidenav.toggle()">
                         <mat-icon>menu</mat-icon>
                     </button> 
-                    <button *ngIf="settings.menu == 'vertical'" mat-icon-button (click)="settings.sidenavIsPinned = !settings.sidenavIsPinned" fxShow="false" fxShow.gt-xs>
+                    <!-- <button *ngIf="settings.menu == 'vertical'" mat-icon-button (click)="settings.sidenavIsPinned = !settings.sidenavIsPinned" fxShow="false" fxShow.gt-xs>
                         <svg class="pin">
                             <path *ngIf="!settings.sidenavIsPinned" d="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z" />
                             <path *ngIf="settings.sidenavIsPinned" d="M2,5.27L3.28,4L20,20.72L18.73,22L12.8,16.07V22H11.2V16H6V14L8,12V11.27L2,5.27M16,12L18,14V16H17.82L8,6.18V4H7V2H17V4H16V12Z" />
                         </svg> 
-                    </button>                 
-                    <button mat-icon-button (click)="showInfoContent = !showInfoContent" fxShow="false" fxShow.gt-xs>
+                    </button>                  -->
+                    <!-- <button mat-icon-button (click)="showInfoContent = !showInfoContent" fxShow="false" fxShow.gt-xs>
                         <mat-icon [@rotate]="showInfoContent" class="mat-icon-lg">expand_more</mat-icon>
-                    </button>
+                    </button> -->
                     <app-favorites fxShow="false" fxShow.gt-sm></app-favorites>                                      
                 </div>          
                 <div fxLayout="row" fxLayoutAlign="end center">
@@ -35,10 +35,10 @@
                             </button> 
                         </form>
                     </div>
-                    <app-flags-menu fxShow="false" fxShow.gt-sm></app-flags-menu>
+                    <!-- <app-flags-menu fxShow="false" fxShow.gt-sm></app-flags-menu> -->
                     <app-fullscreen></app-fullscreen> 
-                    <app-applications fxShow="false" fxShow.gt-sm></app-applications>
-                    <app-messages fxShow="false" fxShow.gt-xs></app-messages>
+                    <!-- <app-applications fxShow="false" fxShow.gt-sm></app-applications> -->
+                    <!-- <app-messages fxShow="false" fxShow.gt-xs></app-messages> -->
                     <app-user-menu></app-user-menu>
                 </div>
             </div>               
