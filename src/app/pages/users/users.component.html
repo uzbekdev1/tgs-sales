@@ -108,7 +108,7 @@
     <div *ngIf="viewType == 'list'" fxLayout="row wrap">
         <div *ngFor="let user of users | UserSearchPipe : searchText" fxFlex="100" class="p-2"> 
             <mat-card class="p-0 user-content"> 
-                <div fxFlex="20" fxFlex.xs="30" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(user.settings.isDeleted) ? '' : user.settings.bgColor">
+                <div fxFlex="10" fxFlex.xs="20" fxLayout="column" fxLayoutAlign="center center" class="bg-primary" [ngClass]="(user.settings.isDeleted) ? '' : user.settings.bgColor">
                     <div class="user-img">
                         <img *ngIf="user.profile.image" [src]="user.profile.image" class="transition mb-2" [class.blocked]="user.settings.isDeleted">
                         <img *ngIf="!user.profile.image" src="assets/img/users/default-user.jpg" class="transition mb-2" [class.blocked]="user.settings.isDeleted">  
@@ -132,7 +132,7 @@
                         </div> -->
                     </div>
                 </div> 
-                <div fxFlex="80" fxFlex.xs="70" fxLayout="row wrap" fxLayout.xs="column" class="user-details">
+                <div fxFlex="90" fxFlex.xs="80" fxLayout="row wrap" fxLayout.xs="column" class="user-details">
                     <div class="w-100">
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <h4 *ngIf="!user.settings.isDeleted" class="user-name px-2">{{user.profile.name}} {{user.profile.surname}}</h4> 
