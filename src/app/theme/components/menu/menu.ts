@@ -33,7 +33,7 @@ export const verticalMenuItems = [
     new Menu (31, 'Journaalposten', '/users', null, 'keyboard', null, false, 30),
     new Menu (31, 'Verdichte journaalposten', '/users', null, 'keyboard', null, false, 30),
     new Menu (32, 'Overzichten', '/users', null, 'keyboard', null, false, 30),
-    new Menu (33, 'GEBRUIKERS', null, null, 'computer', null, true, 0),
+    new Menu (33, 'MEDEWERKERS', null, null, 'computer', null, true, 0),
     new Menu (34, 'Overzicht', '/users', null, 'supervisor_account', null, false, 33), 
     new Menu (35, 'Toegang regels', '/users', null, 'supervisor_account', null, false, 33),
     new Menu (200, 'Instellingen', null, null, 'more_horiz', null, true, 3),
