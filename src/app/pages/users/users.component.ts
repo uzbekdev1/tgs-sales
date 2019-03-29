@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { User, UserProfile, UserWork, UserContacts, UserSocial, UserSettings } from './user.model';
@@ -13,8 +13,6 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
   encapsulation: ViewEncapsulation.None,
   providers: [ UsersService ]  
 })
-
-
 export class UsersComponent implements OnInit {
     public users: User[];
     public searchText: string;
@@ -22,12 +20,6 @@ export class UsersComponent implements OnInit {
     public settings: Settings;
     public showSearch:boolean = true;
     public viewType:string = 'grid';
-
-    listData: MatTableDataSource<any>;
-    displayedColumns: string[] = ['fullName'];
-    @ViewChild(MatSort) sort: MatSort;
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
     constructor(public appSettings:AppSettings, 
                 public dialog: MatDialog,
                 public usersService:UsersService){
@@ -40,9 +32,7 @@ export class UsersComponent implements OnInit {
 
     public getUsers(): void {
         this.users = null; //for show spinner each time
-        this.usersService.getUsers().subscribe(users => {
-            this.users = users
-        });    
+        this.usersService.getUsers().subscribe(users => this.users = users);    
     }
     public addUser(user:User){
         this.usersService.addUser(user).subscribe(user => this.getUsers());

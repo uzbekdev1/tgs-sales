@@ -28,9 +28,6 @@
         <button mat-icon-button (click)="changeView('list')">
             <mat-icon>view_list</mat-icon>
         </button>
-        <button mat-icon-button (click)="changeView('table')">
-            <mat-icon>view_list</mat-icon>
-        </button>
     </div>
 </mat-toolbar>
 
@@ -211,59 +208,6 @@
                 </div>
             </mat-card>
         </div>
-    </div>
-    <div *ngIf="viewType == 'table'" fxLayout="row wrap">
-            <div fxLayout="column" class="p-2">
-                    <div class="p-2"> 
-            <div class="mat-elevation-z8">
-                    <mat-table [dataSource]="listData"  matSort>
-                      <ng-container matColumnDef="fullName">
-                        <mat-header-cell *matHeaderCellDef  mat-sort-header>Full Name</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.user.profile.name}}</mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="email">
-                        <mat-header-cell *matHeaderCellDef  mat-sort-header>Email</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="mobile">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.mobile}}</mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="city">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.city}}</mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="departmentName">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>Department</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.departmentName}}</mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="actions">
-                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                        <mat-cell *matCellDef="let row">
-                          <button mat-icon-button><mat-icon>launch</mat-icon></button>
-                          <button mat-icon-button color="warn"><mat-icon>delete_outline</mat-icon></button>
-                        </mat-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="loading">
-                        <mat-footer-cell *matFooterCellDef colspan="6">
-                          Loading data...
-                        </mat-footer-cell>
-                      </ng-container>
-                      <ng-container matColumnDef="noData">
-                        <mat-footer-cell *matFooterCellDef colspan="6">
-                          No data.
-                        </mat-footer-cell>
-                      </ng-container>
-                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':listData!=null}"></mat-footer-row>
-                      <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(listData!=null && listData.data.length==0)}"></mat-footer-row>
-                    </mat-table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
-                  </div>
-                  </div>
-                  </div>
-
     </div>
     <div *ngIf="users" fxLayout="row wrap">
         <div fxFlex="100" class="p-2"> 
