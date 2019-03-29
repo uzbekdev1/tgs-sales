@@ -39,7 +39,7 @@ export const verticalMenuItems = [
     new Menu (200, 'Instellingen', null, null, 'more_horiz', null, true, 3),
     new Menu (201, 'Adressen', '/users', null, 'supervisor_account', null, false, 200),
     new Menu (202, 'Staten/Provincies', '/users', null, 'supervisor_account', null, false, 200),
-    new Menu (203, 'Landen', '/users', null, 'supervisor_account', null, false, 200),
+    new Menu (203, 'Landen', '/landen', null, 'supervisor_account', null, false, 200),
     new Menu (204, 'Talen', '/users', null, 'supervisor_account', null, false, 200),
     new Menu (205, 'Relatietypes', '/users', null, 'supervisor_account', null, false, 200),
     new Menu (206, 'Bedrijfstakken', '/users', null, 'supervisor_account', null, false, 200),
