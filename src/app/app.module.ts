@@ -14,6 +14,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true               
 };
 
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 import { CalendarModule } from 'angular-calendar';
 import { SharedModule } from './shared/shared.module';
 import { PipesModule } from './theme/pipes/pipes.module';
@@ -37,6 +40,7 @@ import { ApplicationsComponent } from './theme/components/applications/applicati
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
 import { FavoritesComponent } from './theme/components/favorites/favorites.component';
+import { environment } from 'src/environments/environment';
 
 
 @NgModule({
@@ -48,6 +52,8 @@ import { FavoritesComponent } from './theme/components/favorites/favorites.compo
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBNcjxo_35qnEG17dQvvftWa68eZWepYE0'
     }), 
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     PerfectScrollbarModule,     
     CalendarModule.forRoot(),
     SharedModule,

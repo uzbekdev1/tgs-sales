@@ -1,42 +1,82 @@
 import { Injectable } from '@angular/core';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { DatePipe } from '@angular/common';
+import * as _ from 'lodash';
 
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const data: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
-
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AddressenService {
 
-  constructor() { }
+  constructor(private firebase: AngularFireDatabase, private datePipe: DatePipe) { }
 
-  getData(){
-    return data;
+  employeeList: AngularFireList<any>;
+
+  form: FormGroup = new FormGroup({
+    $key: new FormControl(null),
+    fullName: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.email),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    city: new FormControl(''),
+    gender: new FormControl('1'),
+    department: new FormControl(0),
+    hireDate: new FormControl(''),
+    isPermanent: new FormControl(false)
+  });
+
+  initializeFormGroup() {
+    this.form.setValue({
+      $key: null,
+      fullName: '',
+      email: '',
+      mobile: '',
+      city: '',
+      gender: '1',
+      department: 0,
+      hireDate: '',
+      isPermanent: false
+    });
+  }
+
+
+  getEmployees() {
+    this.employeeList = this.firebase.list('employees');
+    return this.employeeList.snapshotChanges();
+  }
+
+  insertEmployee(employee) {
+    this.employeeList.push({
+      fullName: employee.fullName,
+      email: employee.email,
+      mobile: employee.mobile,
+      city: employee.city,
+      gender: employee.gender,
+      department: employee.department,
+      hireDate: employee.hireDate == "" ? "" : this.datePipe.transform(employee.hireDate, 'yyyy-MM-dd'),
+      isPermanent: employee.isPermanent
+    });
+  }
+
+  updateEmployee(employee) {
+    this.employeeList.update(employee.$key,
+      {
+        fullName: employee.fullName,
+        email: employee.email,
+        mobile: employee.mobile,
+        city: employee.city,
+        gender: employee.gender,
+        department: employee.department,
+        hireDate: employee.hireDate == "" ? "" : this.datePipe.transform(employee.hireDate, 'yyyy-MM-dd'),
+        isPermanent: employee.isPermanent
+      });
+  }
+
+  deleteEmployee($key: string) {
+    this.employeeList.remove($key);
+  }
+
+  populateForm(employee) {
+    this.form.setValue(_.omit(employee));
   }
 }
