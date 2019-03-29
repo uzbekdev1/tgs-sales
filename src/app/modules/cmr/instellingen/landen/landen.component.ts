@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatDialog, MatDialogConfig, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
-import { Land } from './landen.model';
 import { LandenService } from './landen.service';
 import { LandDialogComponent } from './land-dialog/land-dialog.component';
 
@@ -10,48 +9,86 @@ import { LandDialogComponent } from './land-dialog/land-dialog.component';
   selector: 'app-landen',
   templateUrl: './landen.component.html',
   styleUrls: ['./landen.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  providers: [ LandenService ]  
+    encapsulation: ViewEncapsulation.None,
+    providers: [ LandenService ]
 })
 export class LandenComponent implements OnInit {
-    public landen: Land[];
-    public searchText: string;
+
     public page:any;
     public settings: Settings;
-    public showSearch:boolean = true;
-    public viewType:string = 'grid';
-    constructor(public appSettings:AppSettings, 
+
+    listData: MatTableDataSource<any>;
+    displayedColumns: string[] = ['code', 'naam', 'actions'];
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    searchKey: string;
+
+    constructor(public appSettings:AppSettings,
                 public dialog: MatDialog,
-                public landenService:LandenService){
+                public service:LandenService,){
         this.settings = this.appSettings.settings; 
     }
 
     ngOnInit() {
-        this.getLanden();         
+        this.service.getLands().subscribe(
+            list => {
+                let array = list.map(item => {
+                //    let departmentName = this.departmentService.getDepartmentName(item.payload.val()['department']);
+                    return {
+                        $key: item.key,
+                   //     departmentName,
+                        ...item.payload.val()
+                    };
+                });
+                this.listData = new MatTableDataSource(array);
+                this.listData.sort = this.sort;
+                this.listData.paginator = this.paginator;
+                this.listData.filterPredicate = (data, filter) => {
+                    return this.displayedColumns.some(ele => {
+                        return ele != 'actions' && data[ele].toLowerCase().indexOf(filter) != -1;
+                    });
+                };
+            });
     }
 
-    public getLanden(): void {
-        this.landen = null; //for show spinner each time
-        this.landenService.getLanden().subscribe(landen => this.landen = landen);    
+    onSearchClear() {
+        this.searchKey = "";
+        this.applyFilter();
     }
-    public addLand(land:Land){
-        this.landenService.addLand(land).subscribe(land => this.getLanden());
+
+    applyFilter() {
+        this.listData.filter = this.searchKey.trim().toLowerCase();
     }
-    public updateLand(land:Land){
-        this.landenService.updateLand(land).subscribe(land => this.getLanden());
+
+
+    onCreate() {
+        this.service.initializeFormGroup();
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = "60%";
+        this.dialog.open(LandenComponent,dialogConfig);
     }
-    public deleteLand(land:Land){
-       this.landenService.deleteLand(land.id).subscribe(land => this.getLanden());
+
+    onEdit(row){
+        this.service.populateForm(row);
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = "60%";
+        this.dialog.open(LandenComponent,dialogConfig);
     }
-    
-    public changeView(viewType){
-        this.viewType = viewType;
-        this.showSearch = false;
+
+    onDelete($key){
+        if(confirm('Are you sure to delete this record ?')){
+            this.service.deleteLand($key);
+        //    this.notificationService.warn('! Deleted successfully');
+        }
     }
 
     public onPageChanged(event){
         this.page = event;
-        this.getLanden();    
+        this.service.getLands();
         document.getElementById('main').scrollTop = 0;
     }
 
@@ -61,10 +98,9 @@ export class LandenComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(land => {
             if(land){
-                (land.id) ? this.updateLand(land) : this.addLand(land);
+                (land.id) ? this.service.updateLand(land) : this.service.insertLand(land);
             }
         });
-        this.showSearch = false;
     }
 
 }

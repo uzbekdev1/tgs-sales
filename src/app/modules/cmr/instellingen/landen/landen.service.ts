@@ -1,27 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Land } from './landen.model';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import * as _ from 'lodash';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class LandenService {
 
-    public url = "api/landen";
-    constructor(public http:HttpClient) { }
-    
-    getLanden(): Observable<Land[]> {
-        return this.http.get<Land[]>(this.url);
+    constructor(private firebase: AngularFireDatabase) { }
+    landList: AngularFireList<any>;
+
+    form: FormGroup = new FormGroup({
+        $key: new FormControl(null),
+        code: new FormControl(''),
+        naam: new FormControl('')
+    });
+
+    initializeFormGroup() {
+        this.form.setValue({
+            $key: null,
+            code: '',
+            naam: '',
+        });
     }
 
-    addLand(land:Land){	    
-        return this.http.post(this.url, land);
+    getLands() {
+        this.landList = this.firebase.list('landen');
+        return this.landList.snapshotChanges();
     }
 
-    updateLand(land:Land){
-        return this.http.put(this.url, land);
+    insertLand(land) {
+        this.landList.push({
+            code: land.code,
+            naam: land.naam
+        });
     }
 
-    deleteLand(id: number) {
-        return this.http.delete(this.url + "/" + id);
-    } 
-} 
+    updateLand(land) {
+        this.landList.update(land.$key,
+            {
+                code: land.code,
+                naam: land.naam
+            });
+    }
+
+    deleteLand($key: string) {
+        this.landList.remove($key);
+    }
+
+    populateForm(land) {
+        this.form.setValue(_.omit(land));
+    }
+}
